@@ -40,8 +40,6 @@ def set_Tk_var():
     che69 = tk.IntVar()
     global che70
     che70 = tk.IntVar()
-    global che71
-    che71 = tk.IntVar()
 
 def init(top, gui, *args, **kwargs):
     global w, top_level, root

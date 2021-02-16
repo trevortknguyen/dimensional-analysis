@@ -121,17 +121,17 @@ class Made_by_Mohammad_Afzal_Shadab:
         
         
         for i in range(0,5):
-            if int(self.depvariable1.get())==1: depvar.append(i)
-            elif int(self.depvariable2.get())==1: depvar.append(i)
-            elif int(self.depvariable3.get())==1: depvar.append(i)
-            elif int(self.depvariable4.get())==1: depvar.append(i)
-            elif int(self.depvariable5.get())==1: depvar.append(i)
+            if i==0 and int(solve_lin_sys_support.che61.get())==1: depvar.append(i)
+            elif i==1 and int(solve_lin_sys_support.che63.get())==1: depvar.append(i)
+            elif i==2 and int(solve_lin_sys_support.che65.get())==1: depvar.append(i)
+            elif i==3 and int(solve_lin_sys_support.che67.get())==1: depvar.append(i)
+            elif i==4 and int(solve_lin_sys_support.che69.get())==1: depvar.append(i)
         
-            if int(self.repvariable1.get())==1: repvar.append(i)
-            elif int(self.repvariable2.get())==1: repvar.append(i)
-            elif int(self.repvariable3.get())==1: repvar.append(i)
-            elif int(self.repvariable4.get())==1: repvar.append(i)
-            elif int(self.repvariable5.get())==1: repvar.append(i)        
+            if i==0 and int(solve_lin_sys_support.che62.get())==1: repvar.append(i)
+            elif i==1 and int(solve_lin_sys_support.che64.get())==1: repvar.append(i)
+            elif i==2 and int(solve_lin_sys_support.che66.get())==1: repvar.append(i)
+            elif i==3 and int(solve_lin_sys_support.che68.get())==1: repvar.append(i)
+            elif i==4 and int(solve_lin_sys_support.che70.get())==1: repvar.append(i)        
         
         #if len(k>2): print('There should be only one dependent variable')
         
@@ -144,21 +144,31 @@ class Made_by_Mohammad_Afzal_Shadab:
         matrix_system = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get())],
                             [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.M4.get()),float(self.M5.get())],
                             [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.M4.get()),float(self.M5.get())]]) 
-        
-        matrix_system_basis = np.empty((len(repvar),len(repvar)))
+    
+        print('Repeated variable',repvar)
+        print('Dependent variable',depvar)
+        print('Dependent variable',solve_lin_sys_support.che61.get(),solve_lin_sys_support.che63.get(),solve_lin_sys_support.che65.get(),solve_lin_sys_support.che67.get(),solve_lin_sys_support.che69.get())
+        print('Repeated variable' ,solve_lin_sys_support.che62.get(),solve_lin_sys_support.che64.get(),solve_lin_sys_support.che66.get(),solve_lin_sys_support.che68.get(),solve_lin_sys_support.che70.get())
+        print('Shape of matrix system', np.shape(matrix_system)[0],np.shape(matrix_system)[1])
+
+        matrix_system_basis = np.empty((len(repvar),np.shape(matrix_system)[1]))
 
         for i in range(0,len(repvar)):
-             matrix_system_basis[:,i] = matrix_system[:,repvar[i]] 
-            
-            
+            print('repvar',i)
+            print('The basis matrix: \n', matrix_system[:,repvar[i]] , '\n')
+            matrix_system_basis[:,i] = matrix_system[:,repvar[i]] 
+
+        if np.linalg.norm(matrix_system_basis) < len(repvar) and np.linalg.norm(matrix_system_basis) < np.shape(matrix_system)[1]: print("ERROR: The repeating variables are not linearly independent.")
+
+        print(np.shape(matrix_system_basis))
+        print(matrix_system_basis)
         #matrix1 = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get())],
         #                    [float(self.L1.get()),float(self.L2.get()),float(self.L3.get())],
         #                    [float(self.T1.get()),float(self.T2.get()),float(self.T3.get())]]) 
 
-        sol = np.empty_like((matrix_system))
+        sol = np.empty((np.shape(matrix_system)[1],np.shape(matrix_system)[1]))
 
         # Using SVD to solve the rank deficient system
-        
         
         ################################Check errors
         for i in range(0,5):
@@ -167,8 +177,12 @@ class Made_by_Mohammad_Afzal_Shadab:
             else:
                 nondimvar.append(i)
                 print(np.shape(matrix_system_basis),np.shape(matrix_system[:,i]))
-                sol[:,i] = nnls(matrix_system_basis,matrix_system[:,i])    
-                print(i,sol[:,i])
+                soln, norm = nnls(matrix_system_basis,matrix_system[:,i])   
+                sol[:,i] = soln
+                print(i,'solution',soln,'\n shape', np.shape(soln))
+                #sol[:,i] = nnls(matrix_system_basis,matrix_system[:,i])    
+                #print(i,sol[:,i])
+                
         return
 
         ####################################
@@ -590,7 +604,6 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T4.configure(justify='center')
         self.T4.configure(selectforeground="white")
 
-
         # Variable 5
 
         self.Var5 = tk.Entry(self.Frame1)
@@ -671,18 +684,8 @@ class Made_by_Mohammad_Afzal_Shadab:
 
         # Checking the dependent and repeating variables
         # Dependent variable
-        self.depvariable1 = tk.IntVar()
-        self.depvariable2 = tk.IntVar()
-        self.depvariable3 = tk.IntVar()
-        self.depvariable4 = tk.IntVar()
-        self.depvariable5 = tk.IntVar()
-        self.repvariable1 = tk.IntVar()
-        self.repvariable2 = tk.IntVar()
-        self.repvariable3 = tk.IntVar()
-        self.repvariable4 = tk.IntVar()
-        self.repvariable5 = tk.IntVar()
 
-        self.depvar1 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable1)
+        self.depvar1 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.depvar1.place(relx=0.718, rely=0.346, relheight=0.047
                 , relwidth=0.064)
         self.depvar1.configure(activebackground="#ececec")
@@ -693,9 +696,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.depvar1.configure(highlightbackground="#d9d9d9")
         self.depvar1.configure(highlightcolor="black")
         self.depvar1.configure(justify='left')
-        self.depvar1.configure(variable=solve_lin_sys_support.che71)
+        self.depvar1.configure(variable=solve_lin_sys_support.che61)
 
-        self.repvar1 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable1)
+        self.repvar1 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.repvar1.place(relx=0.884, rely=0.335, relheight=0.054
                 , relwidth=0.036)
         self.repvar1.configure(activebackground="#ececec")
@@ -706,9 +709,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.repvar1.configure(highlightbackground="#d9d9d9")
         self.repvar1.configure(highlightcolor="black")
         self.repvar1.configure(justify='left')
-        self.repvar1.configure(variable=solve_lin_sys_support.che66)
+        self.repvar1.configure(variable=solve_lin_sys_support.che62)
 
-        self.depvar2 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable2)
+        self.depvar2 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.depvar2.place(relx=0.731, rely=0.458, relheight=0.054
                 , relwidth=0.038)
         self.depvar2.configure(activebackground="#ececec")
@@ -719,9 +722,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.depvar2.configure(highlightbackground="#d9d9d9")
         self.depvar2.configure(highlightcolor="black")
         self.depvar2.configure(justify='left')
-        self.depvar2.configure(variable=solve_lin_sys_support.che62)
+        self.depvar2.configure(variable=solve_lin_sys_support.che63)
 
-        self.repvar2 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable2)
+        self.repvar2 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.repvar2.place(relx=0.884, rely=0.45, relheight=0.054
                 , relwidth=0.036)
         self.repvar2.configure(activebackground="#ececec")
@@ -732,9 +735,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.repvar2.configure(highlightbackground="#d9d9d9")
         self.repvar2.configure(highlightcolor="black")
         self.repvar2.configure(justify='left')
-        self.repvar2.configure(variable=solve_lin_sys_support.che67)
+        self.repvar2.configure(variable=solve_lin_sys_support.che64)
 
-        self.depvar3 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable3)
+        self.depvar3 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.depvar3.place(relx=0.732, rely=0.577, relheight=0.054
                 , relwidth=0.037)
         self.depvar3.configure(activebackground="#ececec")
@@ -745,9 +748,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.depvar3.configure(highlightbackground="#d9d9d9")
         self.depvar3.configure(highlightcolor="black")
         self.depvar3.configure(justify='left')
-        self.depvar3.configure(variable=solve_lin_sys_support.che63)
+        self.depvar3.configure(variable=solve_lin_sys_support.che65)
 
-        self.repvar3 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable3)
+        self.repvar3 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.repvar3.place(relx=0.884, rely=0.577, relheight=0.054
                 , relwidth=0.036)
         self.repvar3.configure(activebackground="#ececec")
@@ -758,10 +761,10 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.repvar3.configure(highlightbackground="#d9d9d9")
         self.repvar3.configure(highlightcolor="black")
         self.repvar3.configure(justify='left')
-        self.repvar3.configure(variable=solve_lin_sys_support.che68)
+        self.repvar3.configure(variable=solve_lin_sys_support.che66)
 
 
-        self.depvar4 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable4)
+        self.depvar4 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.depvar4.place(relx=0.732, rely=0.685, relheight=0.054
                 , relwidth=0.037)
         self.depvar4.configure(activebackground="#ececec")
@@ -772,9 +775,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.depvar4.configure(highlightbackground="#d9d9d9")
         self.depvar4.configure(highlightcolor="black")
         self.depvar4.configure(justify='left')
-        self.depvar4.configure(variable=solve_lin_sys_support.che64)
+        self.depvar4.configure(variable=solve_lin_sys_support.che67)
  
-        self.repvar4 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable4)
+        self.repvar4 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.repvar4.place(relx=0.884, rely=0.685, relheight=0.054
                 , relwidth=0.036)
         self.repvar4.configure(activebackground="#ececec")
@@ -785,9 +788,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.repvar4.configure(highlightbackground="#d9d9d9")
         self.repvar4.configure(highlightcolor="black")
         self.repvar4.configure(justify='left')
-        self.repvar4.configure(variable=solve_lin_sys_support.che69)       
+        self.repvar4.configure(variable=solve_lin_sys_support.che68)       
 
-        self.depvar5 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable5)
+        self.depvar5 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.depvar5.place(relx=0.732, rely=0.793, relheight=0.054
                 , relwidth=0.037)
         self.depvar5.configure(activebackground="#ececec")
@@ -798,9 +801,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.depvar5.configure(highlightbackground="#d9d9d9")
         self.depvar5.configure(highlightcolor="black")
         self.depvar5.configure(justify='left')
-        self.depvar5.configure(variable=solve_lin_sys_support.che65)
+        self.depvar5.configure(variable=solve_lin_sys_support.che69)
 
-        self.repvar5 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable5)
+        self.repvar5 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0)
         self.repvar5.place(relx=0.884, rely=0.793, relheight=0.054
                 , relwidth=0.036)
         self.repvar5.configure(activebackground="#ececec")
