@@ -7,6 +7,8 @@
 
 import sys
 import numpy as np
+import scipy.optimize.nnls as nnls
+
 
 try:
     import Tkinter as tk
@@ -153,10 +155,10 @@ class Made_by_Mohammad_Afzal_Shadab:
         #                    [float(self.L1.get()),float(self.L2.get()),float(self.L3.get())],
         #                    [float(self.T1.get()),float(self.T2.get()),float(self.T3.get())]]) 
 
-        sol = np.empty_like((matrix_system_basis))
+        sol = np.empty_like((matrix_system))
 
         # Using SVD to solve the rank deficient system
-        u,s,vh = np.linalg.svd(matrix_system_basis) 
+        
         
         ################################Check errors
         for i in range(0,5):
@@ -164,11 +166,9 @@ class Made_by_Mohammad_Afzal_Shadab:
                 pass
             else:
                 nondimvar.append(i)
-                
-                #Calculating the coefficients
-                c = np.dot(u.T,matrix_system_basis[:,i]) # c = U^t*b
-                w = np.linalg.solve(np.diag(s),c) # w = V^t*c
-                sol[:,i] = np.dot(vh.T,w) # x = V*w                
+                print(np.shape(matrix_system_basis),np.shape(matrix_system[:,i]))
+                sol[:,i] = nnls(matrix_system_basis,matrix_system[:,i])    
+                print(i,sol[:,i])
         return
 
         ####################################
