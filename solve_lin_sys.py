@@ -6,6 +6,7 @@
 #    Feb 15, 2021 07:45:06 PM CST  platform: Windows NT
 
 import sys
+import numpy as np
 
 try:
     import Tkinter as tk
@@ -79,7 +80,98 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T3.delete(0, 'end')
         self.T4.delete(0, 'end')
         self.T5.delete(0, 'end')
+        
+        self.depvar1.deselect()
+        self.depvar2.deselect()
+        self.depvar3.deselect()
+        self.depvar4.deselect()
+        self.depvar5.deselect()
+
+        self.repvar1.deselect()
+        self.repvar2.deselect()
+        self.repvar3.deselect()
+        self.repvar4.deselect()
+        self.repvar5.deselect()
+        
+        self.Rank.delete(0, 'end')
         return        
+
+    def repVar(self):
+        # Deleting previous entry
+        self.Rank.delete(0, 'end')
+        # making the matrix
+        matrix1 = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get())],
+                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.M4.get()),float(self.M5.get())],
+                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.M4.get()),float(self.M5.get())]]) 
+     
+        rank = np.linalg.matrix_rank(matrix1)
+        self.Rank.insert(0,rank)
+        return
+
+
+    def dimAnalysis(self):
+        # Find the dependent variable and repeating variables from checkboxes
+        depvar = []
+        repvar = []
+        nondimvar = []
+
+        sym     = ([self.Sym1.get(),self.Sym2.get(),self.Sym3.get(),self.Sym4.get(),self.Sym5.get()])
+        
+        
+        for i in range(0,5):
+            if int(self.depvariable1.get())==1: depvar.append(i)
+            elif int(self.depvariable2.get())==1: depvar.append(i)
+            elif int(self.depvariable3.get())==1: depvar.append(i)
+            elif int(self.depvariable4.get())==1: depvar.append(i)
+            elif int(self.depvariable5.get())==1: depvar.append(i)
+        
+            if int(self.repvariable1.get())==1: repvar.append(i)
+            elif int(self.repvariable2.get())==1: repvar.append(i)
+            elif int(self.repvariable3.get())==1: repvar.append(i)
+            elif int(self.repvariable4.get())==1: repvar.append(i)
+            elif int(self.repvariable5.get())==1: repvar.append(i)        
+        
+        #if len(k>2): print('There should be only one dependent variable')
+        
+        # check if the basis vectors chosen are independent
+        #for i in 
+        
+        
+        
+        # making the matrix
+        matrix_system = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get())],
+                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.M4.get()),float(self.M5.get())],
+                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.M4.get()),float(self.M5.get())]]) 
+        
+        matrix_system_basis = np.empty((len(repvar),len(repvar)))
+
+        for i in range(0,len(repvar)):
+             matrix_system_basis[:,i] = matrix_system[:,repvar[i]] 
+            
+            
+        #matrix1 = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get())],
+        #                    [float(self.L1.get()),float(self.L2.get()),float(self.L3.get())],
+        #                    [float(self.T1.get()),float(self.T2.get()),float(self.T3.get())]]) 
+
+        sol = np.empty_like((matrix_system_basis))
+
+        # Using SVD to solve the rank deficient system
+        u,s,vh = np.linalg.svd(matrix_system_basis) 
+        
+        ################################Check errors
+        for i in range(0,5):
+            if i in repvar:
+                pass
+            else:
+                nondimvar.append(i)
+                
+                #Calculating the coefficients
+                c = np.dot(u.T,matrix_system_basis[:,i]) # c = U^t*b
+                w = np.linalg.solve(np.diag(s),c) # w = V^t*c
+                sol[:,i] = np.dot(vh.T,w) # x = V*w                
+        return
+
+        ####################################
     
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -224,17 +316,19 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Message1_2.configure(text='''T''')
         self.Message1_2.configure(width=60)
 
-        self.Message2_2 = tk.Message(self.Frame1)
-        self.Message2_2.place(relx=0.823, rely=0.162, relheight=0.076
-                , relwidth=0.14)
-        self.Message2_2.configure(background="#ffffff")
-        self.Message2_2.configure(font="-family {Segoe UI} -size 12 -weight bold")
-        self.Message2_2.configure(foreground="#000000")
-        self.Message2_2.configure(highlightbackground="#ffffff")
-        self.Message2_2.configure(highlightcolor="black")
-        self.Message2_2.configure(justify='center')
-        self.Message2_2.configure(text='''Repeating Variables''')
-        self.Message2_2.configure(width=138)
+        self.Button22 = tk.Button(self.Frame1)
+        self.Button22.place(relx=0.820, rely=0.162, relheight=0.076
+                            ,width=136)
+        self.Button22.configure(activebackground="#ececec")
+        self.Button22.configure(activeforeground="#000000")
+        self.Button22.configure(background="#d9d9d9")
+        self.Button22.configure(disabledforeground="#a3a3a3")
+        self.Button22.configure(font="-family {Segoe UI} -size 12 -weight bold")
+        self.Button22.configure(foreground="#000000")
+        self.Button22.configure(highlightbackground="#d9d9d9")
+        self.Button22.configure(highlightcolor="black")
+        self.Button22.configure(pady="0")
+        self.Button22.configure(text='''Repeating \n Variables =''', command=self.repVar) 
 
 
         # Adding the variables
@@ -303,32 +397,6 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T1.configure(justify='center')
         self.T1.configure(selectforeground="white")
 
-        self.depvar1 = tk.Checkbutton(self.Frame1)
-        self.depvar1.place(relx=0.718, rely=0.346, relheight=0.047
-                , relwidth=0.064)
-        self.depvar1.configure(activebackground="#ececec")
-        self.depvar1.configure(activeforeground="#000000")
-        self.depvar1.configure(background="#ffffff")
-        self.depvar1.configure(disabledforeground="#a3a3a3")
-        self.depvar1.configure(foreground="#000000")
-        self.depvar1.configure(highlightbackground="#d9d9d9")
-        self.depvar1.configure(highlightcolor="black")
-        self.depvar1.configure(justify='left')
-        self.depvar1.configure(variable=solve_lin_sys_support.che71)
-
-        self.repvar1 = tk.Checkbutton(self.Frame1)
-        self.repvar1.place(relx=0.884, rely=0.335, relheight=0.054
-                , relwidth=0.036)
-        self.repvar1.configure(activebackground="#ececec")
-        self.repvar1.configure(activeforeground="#000000")
-        self.repvar1.configure(background="#ffffff")
-        self.repvar1.configure(disabledforeground="#a3a3a3")
-        self.repvar1.configure(foreground="#000000")
-        self.repvar1.configure(highlightbackground="#d9d9d9")
-        self.repvar1.configure(highlightcolor="black")
-        self.repvar1.configure(justify='left')
-        self.repvar1.configure(variable=solve_lin_sys_support.che66)
-
         # Variable 2
 
         self.Var2 = tk.Entry(self.Frame1)
@@ -394,32 +462,6 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T2.configure(selectbackground="blue")
         self.T2.configure(justify='center')
         self.T2.configure(selectforeground="white")
-
-        self.depvar2 = tk.Checkbutton(self.Frame1)
-        self.depvar2.place(relx=0.731, rely=0.458, relheight=0.054
-                , relwidth=0.038)
-        self.depvar2.configure(activebackground="#ececec")
-        self.depvar2.configure(activeforeground="#000000")
-        self.depvar2.configure(background="#ffffff")
-        self.depvar2.configure(disabledforeground="#a3a3a3")
-        self.depvar2.configure(foreground="#000000")
-        self.depvar2.configure(highlightbackground="#d9d9d9")
-        self.depvar2.configure(highlightcolor="black")
-        self.depvar2.configure(justify='left')
-        self.depvar2.configure(variable=solve_lin_sys_support.che62)
-
-        self.repvar2 = tk.Checkbutton(self.Frame1)
-        self.repvar2.place(relx=0.884, rely=0.45, relheight=0.054
-                , relwidth=0.036)
-        self.repvar2.configure(activebackground="#ececec")
-        self.repvar2.configure(activeforeground="#000000")
-        self.repvar2.configure(background="#ffffff")
-        self.repvar2.configure(disabledforeground="#a3a3a3")
-        self.repvar2.configure(foreground="#000000")
-        self.repvar2.configure(highlightbackground="#d9d9d9")
-        self.repvar2.configure(highlightcolor="black")
-        self.repvar2.configure(justify='left')
-        self.repvar2.configure(variable=solve_lin_sys_support.che67)
         
         # Variable 3
         self.Var3 = tk.Entry(self.Frame1)
@@ -485,32 +527,6 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T3.configure(justify='center')
         self.T3.configure(selectforeground="white")
 
-        self.depvar3 = tk.Checkbutton(self.Frame1)
-        self.depvar3.place(relx=0.732, rely=0.577, relheight=0.054
-                , relwidth=0.037)
-        self.depvar3.configure(activebackground="#ececec")
-        self.depvar3.configure(activeforeground="#000000")
-        self.depvar3.configure(background="#ffffff")
-        self.depvar3.configure(disabledforeground="#a3a3a3")
-        self.depvar3.configure(foreground="#000000")
-        self.depvar3.configure(highlightbackground="#d9d9d9")
-        self.depvar3.configure(highlightcolor="black")
-        self.depvar3.configure(justify='left')
-        self.depvar3.configure(variable=solve_lin_sys_support.che63)
-
-        self.repvar3 = tk.Checkbutton(self.Frame1)
-        self.repvar3.place(relx=0.884, rely=0.577, relheight=0.054
-                , relwidth=0.036)
-        self.repvar3.configure(activebackground="#ececec")
-        self.repvar3.configure(activeforeground="#000000")
-        self.repvar3.configure(background="#ffffff")
-        self.repvar3.configure(disabledforeground="#a3a3a3")
-        self.repvar3.configure(foreground="#000000")
-        self.repvar3.configure(highlightbackground="#d9d9d9")
-        self.repvar3.configure(highlightcolor="black")
-        self.repvar3.configure(justify='left')
-        self.repvar3.configure(variable=solve_lin_sys_support.che68)
-
         self.Var4 = tk.Entry(self.Frame1)
         self.Var4.place(relx=0.061, rely=0.685, height=40, relwidth=0.177)
         self.Var4.configure(background="white")
@@ -574,32 +590,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T4.configure(justify='center')
         self.T4.configure(selectforeground="white")
 
-        self.depvar4 = tk.Checkbutton(self.Frame1)
-        self.depvar4.place(relx=0.732, rely=0.685, relheight=0.054
-                , relwidth=0.037)
-        self.depvar4.configure(activebackground="#ececec")
-        self.depvar4.configure(activeforeground="#000000")
-        self.depvar4.configure(background="#ffffff")
-        self.depvar4.configure(disabledforeground="#a3a3a3")
-        self.depvar4.configure(foreground="#000000")
-        self.depvar4.configure(highlightbackground="#d9d9d9")
-        self.depvar4.configure(highlightcolor="black")
-        self.depvar4.configure(justify='left')
-        self.depvar4.configure(variable=solve_lin_sys_support.che64)
- 
-        self.repvar4 = tk.Checkbutton(self.Frame1)
-        self.repvar4.place(relx=0.884, rely=0.685, relheight=0.054
-                , relwidth=0.036)
-        self.repvar4.configure(activebackground="#ececec")
-        self.repvar4.configure(activeforeground="#000000")
-        self.repvar4.configure(background="#ffffff")
-        self.repvar4.configure(disabledforeground="#a3a3a3")
-        self.repvar4.configure(foreground="#000000")
-        self.repvar4.configure(highlightbackground="#d9d9d9")
-        self.repvar4.configure(highlightcolor="black")
-        self.repvar4.configure(justify='left')
-        self.repvar4.configure(variable=solve_lin_sys_support.che69)       
-        
+
         # Variable 5
 
         self.Var5 = tk.Entry(self.Frame1)
@@ -665,7 +656,138 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T5.configure(justify='center')
         self.T5.configure(selectforeground="white")
 
-        self.depvar5 = tk.Checkbutton(self.Frame1)
+        # Calculating the rank to find the basis functions
+        self.Rank = tk.Entry(self.Frame1)
+        self.Rank.place(relx=0.950, rely=0.162, height=45, relwidth=0.025)
+        self.Rank.configure(background="white")
+        self.Rank.configure(disabledforeground="#a3a3a3")
+        self.Rank.configure(font="TkFixedFont")
+        self.Rank.configure(foreground="#000000")
+        self.Rank.configure(highlightbackground="#d9d9d9")
+        self.Rank.configure(highlightcolor="black")
+        self.Rank.configure(insertbackground="black")
+        self.Rank.configure(selectbackground="blue")
+        self.Rank.configure(selectforeground="white")
+
+        # Checking the dependent and repeating variables
+        # Dependent variable
+        self.depvariable1 = tk.IntVar()
+        self.depvariable2 = tk.IntVar()
+        self.depvariable3 = tk.IntVar()
+        self.depvariable4 = tk.IntVar()
+        self.depvariable5 = tk.IntVar()
+        self.repvariable1 = tk.IntVar()
+        self.repvariable2 = tk.IntVar()
+        self.repvariable3 = tk.IntVar()
+        self.repvariable4 = tk.IntVar()
+        self.repvariable5 = tk.IntVar()
+
+        self.depvar1 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable1)
+        self.depvar1.place(relx=0.718, rely=0.346, relheight=0.047
+                , relwidth=0.064)
+        self.depvar1.configure(activebackground="#ececec")
+        self.depvar1.configure(activeforeground="#000000")
+        self.depvar1.configure(background="#ffffff")
+        self.depvar1.configure(disabledforeground="#a3a3a3")
+        self.depvar1.configure(foreground="#000000")
+        self.depvar1.configure(highlightbackground="#d9d9d9")
+        self.depvar1.configure(highlightcolor="black")
+        self.depvar1.configure(justify='left')
+        self.depvar1.configure(variable=solve_lin_sys_support.che71)
+
+        self.repvar1 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable1)
+        self.repvar1.place(relx=0.884, rely=0.335, relheight=0.054
+                , relwidth=0.036)
+        self.repvar1.configure(activebackground="#ececec")
+        self.repvar1.configure(activeforeground="#000000")
+        self.repvar1.configure(background="#ffffff")
+        self.repvar1.configure(disabledforeground="#a3a3a3")
+        self.repvar1.configure(foreground="#000000")
+        self.repvar1.configure(highlightbackground="#d9d9d9")
+        self.repvar1.configure(highlightcolor="black")
+        self.repvar1.configure(justify='left')
+        self.repvar1.configure(variable=solve_lin_sys_support.che66)
+
+        self.depvar2 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable2)
+        self.depvar2.place(relx=0.731, rely=0.458, relheight=0.054
+                , relwidth=0.038)
+        self.depvar2.configure(activebackground="#ececec")
+        self.depvar2.configure(activeforeground="#000000")
+        self.depvar2.configure(background="#ffffff")
+        self.depvar2.configure(disabledforeground="#a3a3a3")
+        self.depvar2.configure(foreground="#000000")
+        self.depvar2.configure(highlightbackground="#d9d9d9")
+        self.depvar2.configure(highlightcolor="black")
+        self.depvar2.configure(justify='left')
+        self.depvar2.configure(variable=solve_lin_sys_support.che62)
+
+        self.repvar2 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable2)
+        self.repvar2.place(relx=0.884, rely=0.45, relheight=0.054
+                , relwidth=0.036)
+        self.repvar2.configure(activebackground="#ececec")
+        self.repvar2.configure(activeforeground="#000000")
+        self.repvar2.configure(background="#ffffff")
+        self.repvar2.configure(disabledforeground="#a3a3a3")
+        self.repvar2.configure(foreground="#000000")
+        self.repvar2.configure(highlightbackground="#d9d9d9")
+        self.repvar2.configure(highlightcolor="black")
+        self.repvar2.configure(justify='left')
+        self.repvar2.configure(variable=solve_lin_sys_support.che67)
+
+        self.depvar3 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable3)
+        self.depvar3.place(relx=0.732, rely=0.577, relheight=0.054
+                , relwidth=0.037)
+        self.depvar3.configure(activebackground="#ececec")
+        self.depvar3.configure(activeforeground="#000000")
+        self.depvar3.configure(background="#ffffff")
+        self.depvar3.configure(disabledforeground="#a3a3a3")
+        self.depvar3.configure(foreground="#000000")
+        self.depvar3.configure(highlightbackground="#d9d9d9")
+        self.depvar3.configure(highlightcolor="black")
+        self.depvar3.configure(justify='left')
+        self.depvar3.configure(variable=solve_lin_sys_support.che63)
+
+        self.repvar3 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable3)
+        self.repvar3.place(relx=0.884, rely=0.577, relheight=0.054
+                , relwidth=0.036)
+        self.repvar3.configure(activebackground="#ececec")
+        self.repvar3.configure(activeforeground="#000000")
+        self.repvar3.configure(background="#ffffff")
+        self.repvar3.configure(disabledforeground="#a3a3a3")
+        self.repvar3.configure(foreground="#000000")
+        self.repvar3.configure(highlightbackground="#d9d9d9")
+        self.repvar3.configure(highlightcolor="black")
+        self.repvar3.configure(justify='left')
+        self.repvar3.configure(variable=solve_lin_sys_support.che68)
+
+
+        self.depvar4 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable4)
+        self.depvar4.place(relx=0.732, rely=0.685, relheight=0.054
+                , relwidth=0.037)
+        self.depvar4.configure(activebackground="#ececec")
+        self.depvar4.configure(activeforeground="#000000")
+        self.depvar4.configure(background="#ffffff")
+        self.depvar4.configure(disabledforeground="#a3a3a3")
+        self.depvar4.configure(foreground="#000000")
+        self.depvar4.configure(highlightbackground="#d9d9d9")
+        self.depvar4.configure(highlightcolor="black")
+        self.depvar4.configure(justify='left')
+        self.depvar4.configure(variable=solve_lin_sys_support.che64)
+ 
+        self.repvar4 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable4)
+        self.repvar4.place(relx=0.884, rely=0.685, relheight=0.054
+                , relwidth=0.036)
+        self.repvar4.configure(activebackground="#ececec")
+        self.repvar4.configure(activeforeground="#000000")
+        self.repvar4.configure(background="#ffffff")
+        self.repvar4.configure(disabledforeground="#a3a3a3")
+        self.repvar4.configure(foreground="#000000")
+        self.repvar4.configure(highlightbackground="#d9d9d9")
+        self.repvar4.configure(highlightcolor="black")
+        self.repvar4.configure(justify='left')
+        self.repvar4.configure(variable=solve_lin_sys_support.che69)       
+
+        self.depvar5 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.depvariable5)
         self.depvar5.place(relx=0.732, rely=0.793, relheight=0.054
                 , relwidth=0.037)
         self.depvar5.configure(activebackground="#ececec")
@@ -678,7 +800,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.depvar5.configure(justify='left')
         self.depvar5.configure(variable=solve_lin_sys_support.che65)
 
-        self.repvar5 = tk.Checkbutton(self.Frame1)
+        self.repvar5 = tk.Checkbutton(self.Frame1, onvalue = 1, offvalue = 0, variable=self.repvariable5)
         self.repvar5.place(relx=0.884, rely=0.793, relheight=0.054
                 , relwidth=0.036)
         self.repvar5.configure(activebackground="#ececec")
@@ -714,8 +836,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Button2.configure(highlightbackground="#d9d9d9")
         self.Button2.configure(highlightcolor="black")
         self.Button2.configure(pady="0")
-        self.Button2.configure(text='''Refresh''', command=self.doRefresh)  
-        
+        self.Button2.configure(text='''Clear''', command=self.doRefresh)  
 
         self.Button3 = tk.Button(top)
         self.Button3.place(relx=0.6, rely=0.914, height=50, width=100)
@@ -728,7 +849,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Button3.configure(highlightbackground="#d9d9d9")
         self.Button3.configure(highlightcolor="black")
         self.Button3.configure(pady="0")
-        self.Button3.configure(text='''Calculate!''')
+        self.Button3.configure(text='''Calculate!''', command = self.dimAnalysis)
 
 
 if __name__ == '__main__':
