@@ -112,6 +112,7 @@ class Made_by_Mohammad_Afzal_Shadab:
 
 
     def dimAnalysis(self):
+        
         # Find the dependent variable and repeating variables from checkboxes
         depvar = []
         repvar = []
@@ -142,8 +143,10 @@ class Made_by_Mohammad_Afzal_Shadab:
         
         # making the matrix
         matrix_system = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get())],
-                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.M4.get()),float(self.M5.get())],
-                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.M4.get()),float(self.M5.get())]]) 
+                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.L4.get()),float(self.L5.get())],
+                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.T4.get()),float(self.T5.get())]]) 
+
+        print('initial matrix system \n',matrix_system)
     
         print('Repeated variable',repvar)
         print('Dependent variable',depvar)
@@ -151,14 +154,15 @@ class Made_by_Mohammad_Afzal_Shadab:
         print('Repeated variable' ,solve_lin_sys_support.che62.get(),solve_lin_sys_support.che64.get(),solve_lin_sys_support.che66.get(),solve_lin_sys_support.che68.get(),solve_lin_sys_support.che70.get())
         print('Shape of matrix system', np.shape(matrix_system)[0],np.shape(matrix_system)[1])
 
-        matrix_system_basis = np.empty((len(repvar),np.shape(matrix_system)[1]))
+        matrix_system_basis = np.empty((len(repvar),len(repvar)))
 
         for i in range(0,len(repvar)):
             print('repvar',i)
             print('The basis matrix: \n', matrix_system[:,repvar[i]] , '\n')
             matrix_system_basis[:,i] = matrix_system[:,repvar[i]] 
 
-        if np.linalg.norm(matrix_system_basis) < len(repvar) and np.linalg.norm(matrix_system_basis) < np.shape(matrix_system)[1]: print("ERROR: The repeating variables are not linearly independent.")
+        if np.linalg.matrix_rank(matrix_system_basis) < len(repvar) and np.linalg.matrix_rank(matrix_system_basis) < np.shape(matrix_system)[1]: print("ERROR: The repeating variables are not linearly independent.")
+        print('Rank',np.linalg.matrix_rank(matrix_system_basis),len(repvar),np.shape(matrix_system)[1])
 
         print(np.shape(matrix_system_basis))
         print(matrix_system_basis)
@@ -166,8 +170,9 @@ class Made_by_Mohammad_Afzal_Shadab:
         #                    [float(self.L1.get()),float(self.L2.get()),float(self.L3.get())],
         #                    [float(self.T1.get()),float(self.T2.get()),float(self.T3.get())]]) 
 
-        sol = np.empty((np.shape(matrix_system)[1],np.shape(matrix_system)[1]))
-
+        sol = np.empty((len(repvar),np.shape(matrix_system)[1]))
+        sol[:] = np.NaN
+        
         # Using SVD to solve the rank deficient system
         
         ################################Check errors
@@ -175,11 +180,13 @@ class Made_by_Mohammad_Afzal_Shadab:
             if i in repvar:
                 pass
             else:
+                print('matrix system \n',matrix_system)
+
                 nondimvar.append(i)
-                print(np.shape(matrix_system_basis),np.shape(matrix_system[:,i]))
+                print(i,matrix_system_basis,matrix_system[:,i])
                 soln, norm = nnls(matrix_system_basis,matrix_system[:,i])   
                 sol[:,i] = soln
-                print(i,'solution',soln,'\n shape', np.shape(soln))
+                print(i,'norm',norm,'solution',soln,'\n shape', np.shape(soln))
                 #sol[:,i] = nnls(matrix_system_basis,matrix_system[:,i])    
                 #print(i,sol[:,i])
                 
