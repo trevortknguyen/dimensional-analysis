@@ -204,6 +204,9 @@ class Made_by_Mohammad_Afzal_Shadab:
                             [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.L4.get()),float(self.L5.get())],
                             [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.T4.get()),float(self.T5.get())]]) 
 
+        #Check dimensions
+        matrix_system = matrix_system[~np.all(matrix_system == 0.0, axis=1)]
+        
         print('initial matrix system \n',matrix_system)
     
         print('Repeated variable',self.repvar)
@@ -212,7 +215,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         print('Repeated variable' ,solve_lin_sys_support.che62.get(),solve_lin_sys_support.che64.get(),solve_lin_sys_support.che66.get(),solve_lin_sys_support.che68.get(),solve_lin_sys_support.che70.get())
         print('Shape of matrix system', np.shape(matrix_system)[0],np.shape(matrix_system)[1])
 
-        matrix_system_basis = np.empty((len(self.repvar),len(self.repvar)))
+        matrix_system_basis = np.empty((np.shape(matrix_system)[0],len(self.repvar)))
 
         for i in range(0,len(self.repvar)):
             print('self.repvar',i)
@@ -244,8 +247,8 @@ class Made_by_Mohammad_Afzal_Shadab:
                 self.nondimvar.append(i)
                 print(i,matrix_system_basis,matrix_system[:,i])
                 soln, residuals, rank, s = np.linalg.lstsq(matrix_system_basis,matrix_system[:,i])   
-                sol[:,i] = soln
                 print(i,'solution',soln,'\n shape', np.shape(soln))
+                sol[:,i] = soln
                 
 
         string = []
