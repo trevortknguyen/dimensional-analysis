@@ -23,6 +23,7 @@ except ImportError:
     py3 = True
 
 import solve_lin_sys_support
+from tkinter import messagebox as fmsgbox
 
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
@@ -103,8 +104,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Rank.delete(0, 'end')
         # making the matrix
         matrix1 = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get())],
-                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.M4.get()),float(self.M5.get())],
-                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.M4.get()),float(self.M5.get())]]) 
+                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.L4.get()),float(self.L5.get())],
+                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.T4.get()),float(self.T5.get())]]) 
      
         rank = np.linalg.matrix_rank(matrix1)
         self.Rank.insert(0,rank)
@@ -114,31 +115,30 @@ class Made_by_Mohammad_Afzal_Shadab:
     def dimAnalysis(self):
         
         # Find the dependent variable and repeating variables from checkboxes
-        depvar = []
-        repvar = []
-        nondimvar = []
+        self.depvar = []
+        self.repvar = []
+        self.nondimvar = []
 
-        sym     = ([self.Sym1.get(),self.Sym2.get(),self.Sym3.get(),self.Sym4.get(),self.Sym5.get()])
-        
+        self.sym     = ([self.Sym1.get(),self.Sym2.get(),self.Sym3.get(),self.Sym4.get(),self.Sym5.get()])
+        self.var     = ([self.Var1.get(),self.Var2.get(),self.Var3.get(),self.Var4.get(),self.Var5.get()])        
         
         for i in range(0,5):
-            if i==0 and int(solve_lin_sys_support.che61.get())==1: depvar.append(i)
-            elif i==1 and int(solve_lin_sys_support.che63.get())==1: depvar.append(i)
-            elif i==2 and int(solve_lin_sys_support.che65.get())==1: depvar.append(i)
-            elif i==3 and int(solve_lin_sys_support.che67.get())==1: depvar.append(i)
-            elif i==4 and int(solve_lin_sys_support.che69.get())==1: depvar.append(i)
+            if i==0 and int(solve_lin_sys_support.che61.get())==1: self.depvar.append(i)
+            elif i==1 and int(solve_lin_sys_support.che63.get())==1: self.depvar.append(i)
+            elif i==2 and int(solve_lin_sys_support.che65.get())==1: self.depvar.append(i)
+            elif i==3 and int(solve_lin_sys_support.che67.get())==1: self.depvar.append(i)
+            elif i==4 and int(solve_lin_sys_support.che69.get())==1: self.depvar.append(i)
         
-            if i==0 and int(solve_lin_sys_support.che62.get())==1: repvar.append(i)
-            elif i==1 and int(solve_lin_sys_support.che64.get())==1: repvar.append(i)
-            elif i==2 and int(solve_lin_sys_support.che66.get())==1: repvar.append(i)
-            elif i==3 and int(solve_lin_sys_support.che68.get())==1: repvar.append(i)
-            elif i==4 and int(solve_lin_sys_support.che70.get())==1: repvar.append(i)        
+            if i==0 and int(solve_lin_sys_support.che62.get())==1: self.repvar.append(i)
+            elif i==1 and int(solve_lin_sys_support.che64.get())==1: self.repvar.append(i)
+            elif i==2 and int(solve_lin_sys_support.che66.get())==1: self.repvar.append(i)
+            elif i==3 and int(solve_lin_sys_support.che68.get())==1: self.repvar.append(i)
+            elif i==4 and int(solve_lin_sys_support.che70.get())==1: self.repvar.append(i)        
         
         #if len(k>2): print('There should be only one dependent variable')
         
         # check if the basis vectors chosen are independent
         #for i in 
-        
         
         
         # making the matrix
@@ -148,21 +148,21 @@ class Made_by_Mohammad_Afzal_Shadab:
 
         print('initial matrix system \n',matrix_system)
     
-        print('Repeated variable',repvar)
-        print('Dependent variable',depvar)
+        print('Repeated variable',self.repvar)
+        print('Dependent variable',self.depvar)
         print('Dependent variable',solve_lin_sys_support.che61.get(),solve_lin_sys_support.che63.get(),solve_lin_sys_support.che65.get(),solve_lin_sys_support.che67.get(),solve_lin_sys_support.che69.get())
         print('Repeated variable' ,solve_lin_sys_support.che62.get(),solve_lin_sys_support.che64.get(),solve_lin_sys_support.che66.get(),solve_lin_sys_support.che68.get(),solve_lin_sys_support.che70.get())
         print('Shape of matrix system', np.shape(matrix_system)[0],np.shape(matrix_system)[1])
 
-        matrix_system_basis = np.empty((len(repvar),len(repvar)))
+        matrix_system_basis = np.empty((len(self.repvar),len(self.repvar)))
 
-        for i in range(0,len(repvar)):
-            print('repvar',i)
-            print('The basis matrix: \n', matrix_system[:,repvar[i]] , '\n')
-            matrix_system_basis[:,i] = matrix_system[:,repvar[i]] 
+        for i in range(0,len(self.repvar)):
+            print('self.repvar',i)
+            print('The basis matrix: \n', matrix_system[:,self.repvar[i]] , '\n')
+            matrix_system_basis[:,i] = matrix_system[:,self.repvar[i]] 
 
-        if np.linalg.matrix_rank(matrix_system_basis) < len(repvar) and np.linalg.matrix_rank(matrix_system_basis) < np.shape(matrix_system)[1]: print("ERROR: The repeating variables are not linearly independent.")
-        print('Rank',np.linalg.matrix_rank(matrix_system_basis),len(repvar),np.shape(matrix_system)[1])
+        if np.linalg.matrix_rank(matrix_system_basis) < len(self.repvar) and np.linalg.matrix_rank(matrix_system_basis) < np.shape(matrix_system)[1]: fmsgbox.showinfo("ERROR","The repeating variables are not linearly independent.")
+        print('Rank',np.linalg.matrix_rank(matrix_system_basis),len(self.repvar),np.shape(matrix_system)[1])
 
         print(np.shape(matrix_system_basis))
         print(matrix_system_basis)
@@ -170,26 +170,45 @@ class Made_by_Mohammad_Afzal_Shadab:
         #                    [float(self.L1.get()),float(self.L2.get()),float(self.L3.get())],
         #                    [float(self.T1.get()),float(self.T2.get()),float(self.T3.get())]]) 
 
-        sol = np.empty((len(repvar),np.shape(matrix_system)[1]))
+        sol = np.empty_like(matrix_system)
         sol[:] = np.NaN
         
         # Using SVD to solve the rank deficient system
         
         ################################Check errors
         for i in range(0,5):
-            if i in repvar:
+            if i in self.repvar:
                 pass
             else:
                 print('matrix system \n',matrix_system)
 
-                nondimvar.append(i)
+                self.nondimvar.append(i)
                 print(i,matrix_system_basis,matrix_system[:,i])
-                soln, norm = nnls(matrix_system_basis,matrix_system[:,i])   
+                soln, residuals, rank, s = np.linalg.lstsq(matrix_system_basis,matrix_system[:,i])   
                 sol[:,i] = soln
-                print(i,'norm',norm,'solution',soln,'\n shape', np.shape(soln))
-                #sol[:,i] = nnls(matrix_system_basis,matrix_system[:,i])    
-                #print(i,sol[:,i])
+                print(i,'solution',soln,'\n shape', np.shape(soln))
                 
+
+        string = []
+
+        for i in self.nondimvar:
+            stringrepvar = []
+            for j in self.repvar:
+                stringrepvar.append(f"{self.sym[j]}^{sol[j,i]}") 
+            stringrepvar = '*'.join(stringrepvar)
+            stringrepvar = f'({stringrepvar})'
+            if i in self.depvar:
+                depstring = f"{self.sym[i]}/{stringrepvar}"
+            else:    
+                string.append(f"{self.sym[i]}/{stringrepvar}")
+        info_message = ','.join(string)
+        info = []        
+        for i in range(0,len(self.sym)):
+            info.append(f'{self.sym[i]} : {self.var[i]}')
+        info = ' \n '.join(info)
+        
+        if not np.linalg.matrix_rank(matrix_system_basis) < len(self.repvar) and np.linalg.matrix_rank(matrix_system_basis) < np.shape(matrix_system)[1]:
+            fmsgbox.showinfo("Non-dimensional analysis result", f"Relationship: \n {depstring} = \u03A6({info_message}) \n \n Parameters: \n \u03A6 : Function \n {info}")
         return
 
         ####################################
@@ -358,7 +377,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var1.place(relx=0.059, rely=0.341, height=40, relwidth=0.177)
         self.Var1.configure(background="white")
         self.Var1.configure(disabledforeground="#a3a3a3")
-        self.Var1.configure(font="TkFixedFont")
+        self.Var1.configure(font="-family {Segoe UI}")
         self.Var1.configure(foreground="#000000")
         self.Var1.configure(highlightbackground="#d9d9d9")
         self.Var1.configure(highlightcolor="black")
@@ -370,7 +389,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym1.place(relx=0.295, rely=0.342, height=40, relwidth=0.075)
         self.Sym1.configure(background="white")
         self.Sym1.configure(disabledforeground="#a3a3a3")
-        self.Sym1.configure(font="TkFixedFont")
+        self.Sym1.configure(font="-family {Segoe UI}")
         self.Sym1.configure(foreground="#000000")
         self.Sym1.configure(highlightbackground="#d9d9d9")
         self.Sym1.configure(highlightcolor="black")
@@ -381,9 +400,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M1 = tk.Entry(self.Frame1)
         self.M1.place(relx=0.447, rely=0.342, height=40, relwidth=0.045)
         self.M1.configure(background="white")
-        self.M1.configure(cursor="fleur")
         self.M1.configure(disabledforeground="#a3a3a3")
-        self.M1.configure(font="TkFixedFont")
+        self.M1.configure(font="-family {Segoe UI}")
         self.M1.configure(foreground="#000000")
         self.M1.configure(highlightbackground="#d9d9d9")
         self.M1.configure(highlightcolor="black")
@@ -396,7 +414,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L1.place(relx=0.52, rely=0.342, height=40, relwidth=0.045)
         self.L1.configure(background="white")
         self.L1.configure(disabledforeground="#a3a3a3")
-        self.L1.configure(font="TkFixedFont")
+        self.L1.configure(font="-family {Segoe UI}")
         self.L1.configure(foreground="#000000")
         self.L1.configure(highlightbackground="#d9d9d9")
         self.L1.configure(highlightcolor="black")
@@ -409,7 +427,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T1.place(relx=0.589, rely=0.342, height=40, relwidth=0.045)
         self.T1.configure(background="white")
         self.T1.configure(disabledforeground="#a3a3a3")
-        self.T1.configure(font="TkFixedFont")
+        self.T1.configure(font="-family {Segoe UI}")
         self.T1.configure(foreground="#000000")
         self.T1.configure(highlightbackground="#d9d9d9")
         self.T1.configure(highlightcolor="black")
@@ -424,7 +442,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var2.place(relx=0.062, rely=0.458, height=40, relwidth=0.177)
         self.Var2.configure(background="white")
         self.Var2.configure(disabledforeground="#a3a3a3")
-        self.Var2.configure(font="TkFixedFont")
+        self.Var2.configure(font="-family {Segoe UI}")
         self.Var2.configure(foreground="#000000")
         self.Var2.configure(highlightbackground="#d9d9d9")
         self.Var2.configure(highlightcolor="black")
@@ -436,7 +454,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym2.place(relx=0.295, rely=0.45, height=40, relwidth=0.075)
         self.Sym2.configure(background="white")
         self.Sym2.configure(disabledforeground="#a3a3a3")
-        self.Sym2.configure(font="TkFixedFont")
+        self.Sym2.configure(font="-family {Segoe UI}")
         self.Sym2.configure(foreground="#000000")
         self.Sym2.configure(highlightbackground="#d9d9d9")
         self.Sym2.configure(highlightcolor="black")
@@ -448,7 +466,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M2.place(relx=0.447, rely=0.45, height=40, relwidth=0.045)
         self.M2.configure(background="white")
         self.M2.configure(disabledforeground="#a3a3a3")
-        self.M2.configure(font="TkFixedFont")
+        self.M2.configure(font="-family {Segoe UI}")
         self.M2.configure(foreground="#000000")
         self.M2.configure(highlightbackground="#d9d9d9")
         self.M2.configure(highlightcolor="black")
@@ -461,7 +479,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L2.place(relx=0.518, rely=0.45, height=40, relwidth=0.045)
         self.L2.configure(background="white")
         self.L2.configure(disabledforeground="#a3a3a3")
-        self.L2.configure(font="TkFixedFont")
+        self.L2.configure(font="-family {Segoe UI}")
         self.L2.configure(foreground="#000000")
         self.L2.configure(highlightbackground="#d9d9d9")
         self.L2.configure(highlightcolor="black")
@@ -475,7 +493,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T2.place(relx=0.589, rely=0.45, height=40, relwidth=0.045)
         self.T2.configure(background="white")
         self.T2.configure(disabledforeground="#a3a3a3")
-        self.T2.configure(font="TkFixedFont")
+        self.T2.configure(font="-family {Segoe UI}")
         self.T2.configure(foreground="#000000")
         self.T2.configure(highlightbackground="#d9d9d9")
         self.T2.configure(highlightcolor="black")
@@ -489,7 +507,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var3.place(relx=0.061, rely=0.577, height=40, relwidth=0.177)
         self.Var3.configure(background="white")
         self.Var3.configure(disabledforeground="#a3a3a3")
-        self.Var3.configure(font="TkFixedFont")
+        self.Var3.configure(font="-family {Segoe UI}")
         self.Var3.configure(foreground="#000000")
         self.Var3.configure(highlightbackground="#d9d9d9")
         self.Var3.configure(highlightcolor="black")
@@ -501,7 +519,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym3.place(relx=0.295, rely=0.577, height=40, relwidth=0.075)
         self.Sym3.configure(background="white")
         self.Sym3.configure(disabledforeground="#a3a3a3")
-        self.Sym3.configure(font="TkFixedFont")
+        self.Sym3.configure(font="-family {Segoe UI}")
         self.Sym3.configure(foreground="#000000")
         self.Sym3.configure(highlightbackground="#d9d9d9")
         self.Sym3.configure(highlightcolor="black")
@@ -513,7 +531,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M3.place(relx=0.448, rely=0.571, height=40, relwidth=0.045)
         self.M3.configure(background="white")
         self.M3.configure(disabledforeground="#a3a3a3")
-        self.M3.configure(font="TkFixedFont")
+        self.M3.configure(font="-family {Segoe UI}")
         self.M3.configure(foreground="#000000")
         self.M3.configure(highlightbackground="#d9d9d9")
         self.M3.configure(highlightcolor="black")
@@ -526,7 +544,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L3.place(relx=0.521, rely=0.568, height=40, relwidth=0.045)
         self.L3.configure(background="white")
         self.L3.configure(disabledforeground="#a3a3a3")
-        self.L3.configure(font="TkFixedFont")
+        self.L3.configure(font="-family {Segoe UI}")
         self.L3.configure(foreground="#000000")
         self.L3.configure(highlightbackground="#d9d9d9")
         self.L3.configure(highlightcolor="black")
@@ -539,7 +557,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T3.place(relx=0.592, rely=0.569, height=40, relwidth=0.045)
         self.T3.configure(background="white")
         self.T3.configure(disabledforeground="#a3a3a3")
-        self.T3.configure(font="TkFixedFont")
+        self.T3.configure(font="-family {Segoe UI}")
         self.T3.configure(foreground="#000000")
         self.T3.configure(highlightbackground="#d9d9d9")
         self.T3.configure(highlightcolor="black")
@@ -552,7 +570,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var4.place(relx=0.061, rely=0.685, height=40, relwidth=0.177)
         self.Var4.configure(background="white")
         self.Var4.configure(disabledforeground="#a3a3a3")
-        self.Var4.configure(font="TkFixedFont")
+        self.Var4.configure(font="-family {Segoe UI}")
         self.Var4.configure(foreground="#000000")
         self.Var4.configure(highlightbackground="#d9d9d9")
         self.Var4.configure(highlightcolor="black")
@@ -564,7 +582,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym4.place(relx=0.295, rely=0.685, height=40, relwidth=0.075)
         self.Sym4.configure(background="white")
         self.Sym4.configure(disabledforeground="#a3a3a3")
-        self.Sym4.configure(font="TkFixedFont")
+        self.Sym4.configure(font="-family {Segoe UI}")
         self.Sym4.configure(foreground="#000000")
         self.Sym4.configure(highlightbackground="#d9d9d9")
         self.Sym4.configure(highlightcolor="black")
@@ -576,7 +594,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M4.place(relx=0.447, rely=0.679, height=40, relwidth=0.045)
         self.M4.configure(background="white")
         self.M4.configure(disabledforeground="#a3a3a3")
-        self.M4.configure(font="TkFixedFont")
+        self.M4.configure(font="-family {Segoe UI}")
         self.M4.configure(foreground="#000000")
         self.M4.configure(highlightbackground="#d9d9d9")
         self.M4.configure(highlightcolor="black")
@@ -589,7 +607,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L4.place(relx=0.521, rely=0.677, height=40, relwidth=0.045)
         self.L4.configure(background="white")
         self.L4.configure(disabledforeground="#a3a3a3")
-        self.L4.configure(font="TkFixedFont")
+        self.L4.configure(font="-family {Segoe UI}")
         self.L4.configure(foreground="#000000")
         self.L4.configure(highlightbackground="#d9d9d9")
         self.L4.configure(highlightcolor="black")
@@ -602,7 +620,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T4.place(relx=0.593, rely=0.681, height=40, relwidth=0.045)
         self.T4.configure(background="white")
         self.T4.configure(disabledforeground="#a3a3a3")
-        self.T4.configure(font="TkFixedFont")
+        self.T4.configure(font="-family {Segoe UI}")
         self.T4.configure(foreground="#000000")
         self.T4.configure(highlightbackground="#d9d9d9")
         self.T4.configure(highlightcolor="black")
@@ -617,7 +635,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var5.place(relx=0.061, rely=0.793, height=40, relwidth=0.177)
         self.Var5.configure(background="white")
         self.Var5.configure(disabledforeground="#a3a3a3")
-        self.Var5.configure(font="TkFixedFont")
+        self.Var5.configure(font="-family {Segoe UI}")
         self.Var5.configure(foreground="#000000")
         self.Var5.configure(highlightbackground="#d9d9d9")
         self.Var5.configure(highlightcolor="black")
@@ -629,7 +647,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym5.place(relx=0.294, rely=0.796, height=40, relwidth=0.075)
         self.Sym5.configure(background="white")
         self.Sym5.configure(disabledforeground="#a3a3a3")
-        self.Sym5.configure(font="TkFixedFont")
+        self.Sym5.configure(font="-family {Segoe UI}")
         self.Sym5.configure(foreground="#000000")
         self.Sym5.configure(highlightbackground="#d9d9d9")
         self.Sym5.configure(highlightcolor="black")
@@ -641,7 +659,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M5.place(relx=0.447, rely=0.793, height=40, relwidth=0.045)
         self.M5.configure(background="white")
         self.M5.configure(disabledforeground="#a3a3a3")
-        self.M5.configure(font="TkFixedFont")
+        self.M5.configure(font="-family {Segoe UI}")
         self.M5.configure(foreground="#000000")
         self.M5.configure(highlightbackground="#d9d9d9")
         self.M5.configure(highlightcolor="black")
@@ -654,7 +672,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L5.place(relx=0.518, rely=0.793, height=40, relwidth=0.045)
         self.L5.configure(background="white")
         self.L5.configure(disabledforeground="#a3a3a3")
-        self.L5.configure(font="TkFixedFont")
+        self.L5.configure(font="-family {Segoe UI}")
         self.L5.configure(foreground="#000000")
         self.L5.configure(highlightbackground="#d9d9d9")
         self.L5.configure(highlightcolor="black")
@@ -667,7 +685,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T5.place(relx=0.596, rely=0.793, height=40, relwidth=0.045)
         self.T5.configure(background="white")
         self.T5.configure(disabledforeground="#a3a3a3")
-        self.T5.configure(font="TkFixedFont")
+        self.T5.configure(font="-family {Segoe UI}")
         self.T5.configure(foreground="#000000")
         self.T5.configure(highlightbackground="#d9d9d9")
         self.T5.configure(highlightcolor="black")
@@ -681,7 +699,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Rank.place(relx=0.950, rely=0.162, height=45, relwidth=0.025)
         self.Rank.configure(background="white")
         self.Rank.configure(disabledforeground="#a3a3a3")
-        self.Rank.configure(font="TkFixedFont")
+        self.Rank.configure(font="-family {Segoe UI}")
         self.Rank.configure(foreground="#000000")
         self.Rank.configure(highlightbackground="#d9d9d9")
         self.Rank.configure(highlightcolor="black")
