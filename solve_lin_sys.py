@@ -170,6 +170,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         #                    [float(self.L1.get()),float(self.L2.get()),float(self.L3.get())],
         #                    [float(self.T1.get()),float(self.T2.get()),float(self.T3.get())]]) 
 
+        #sol = np.empty_like(matrix_system)
         sol = np.empty_like(matrix_system)
         sol[:] = np.NaN
         
@@ -194,7 +195,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         for i in self.nondimvar:
             stringrepvar = []
             for j in self.repvar:
-                stringrepvar.append(f"{self.sym[j]}^{sol[j,i]}") 
+                stringrepvar.append(f"{self.sym[j]}^{sol[self.repvar.index(j),i]}") 
             stringrepvar = '*'.join(stringrepvar)
             stringrepvar = f'({stringrepvar})'
             if i in self.depvar:
@@ -305,7 +306,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Message2_1_1_1.configure(highlightbackground="#ffffff")
         self.Message2_1_1_1.configure(highlightcolor="black")
         self.Message2_1_1_1.configure(justify='center')
-        self.Message2_1_1_1.configure(text='''Dimensions''')
+        self.Message2_1_1_1.configure(text='''Dimensional matrix''')
         self.Message2_1_1_1.configure(width=127)
 
         self.TSeparator1 = ttk.Separator(self.Frame1)
