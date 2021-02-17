@@ -106,11 +106,69 @@ class Made_by_Mohammad_Afzal_Shadab:
         matrix1 = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get())],
                             [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.L4.get()),float(self.L5.get())],
                             [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.T4.get()),float(self.T5.get())]]) 
-     
+
         rank = np.linalg.matrix_rank(matrix1)
         self.Rank.insert(0,rank)
         return
 
+    def fillEmptyVar(self):
+          if self.Sym1.get() == '':
+              self.Sym1.insert(0,'c1')
+          if self.Sym2.get() == '':
+              self.Sym2.insert(0,'c2')
+          if self.Sym3.get() == '':
+              self.Sym3.insert(0,'c3')
+          if self.Sym4.get() == '':
+              self.Sym4.insert(0,'c4')
+          if self.Sym5.get() == '':
+              self.Sym5.insert(0,'c5')        
+
+          if self.Var1.get() == '':
+              self.Var1.insert(0,'Dummy variable1')
+          if self.Var2.get() == '':
+              self.Var2.insert(0,'Dummy variable2')
+          if self.Var3.get() == '':
+              self.Var3.insert(0,'Dummy variable3')
+          if self.Var4.get() == '':
+              self.Var4.insert(0,'Dummy variable4')
+          if self.Var5.get() == '':
+              self.Var5.insert(0,'Dummy variable5')         
+        
+          if self.M1.get() == '':
+              self.M1.insert(0,'0')
+          if self.M2.get() == '':
+              self.M2.insert(0,'0')
+          if self.M3.get() == '':
+              self.M3.insert(0,'0')
+          if self.M4.get() == '':
+              self.M4.insert(0,'0')
+          if self.M5.get() == '':
+              self.M5.insert(0,'0') 
+          if self.L1.get() == '':
+              self.L1.insert(0,'0')
+          if self.L2.get() == '':
+              self.L2.insert(0,'0')
+          if self.L3.get() == '':
+              self.L3.insert(0,'0')
+          if self.L4.get() == '':
+              self.L4.insert(0,'0')
+          if self.L5.get() == '':
+              self.L5.insert(0,'0')               
+          if self.T1.get() == '':
+              self.T1.insert(0,'0')
+          if self.T2.get() == '':
+              self.T2.insert(0,'0')
+          if self.T3.get() == '':
+              self.T3.insert(0,'0')
+          if self.T4.get() == '':
+              self.T4.insert(0,'0')
+          if self.T5.get() == '':
+              self.T5.insert(0,'0')                
+              
+              
+              
+              
+          return
 
     def dimAnalysis(self):
         
@@ -369,7 +427,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Button22.configure(highlightbackground="#d9d9d9")
         self.Button22.configure(highlightcolor="black")
         self.Button22.configure(pady="0")
-        self.Button22.configure(text='''Repeating \n Variables =''', command=self.repVar) 
+        self.Button22.configure(text='''Repeating \n Variables =''', command=lambda:[self.fillEmptyVar(),self.repVar()]) 
 
 
         # Adding the variables
@@ -878,8 +936,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Button3.configure(highlightbackground="#d9d9d9")
         self.Button3.configure(highlightcolor="black")
         self.Button3.configure(pady="0")
-        self.Button3.configure(text='''Calculate!''', command = self.dimAnalysis)
-
+        self.Button3.configure(text='''Calculate!''',  command=lambda:[self.fillEmptyVar(),self.dimAnalysis()])
 
 if __name__ == '__main__':
     vp_start_gui()
