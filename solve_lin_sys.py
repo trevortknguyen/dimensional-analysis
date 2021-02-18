@@ -294,7 +294,7 @@ class Made_by_Mohammad_Afzal_Shadab:
 
         top.geometry("1200x700+253+37")
         top.minsize(120, 1)
-        top.maxsize(1540, 845)
+        top.maxsize(2000, 1000)
         top.resizable(1,  1)
         top.title("Made by Mohammad Afzal Shadab")
         top.configure(background="#263D42")
