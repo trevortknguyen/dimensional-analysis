@@ -193,9 +193,13 @@ class Made_by_Mohammad_Afzal_Shadab:
         # Deleting previous entry
         self.Rank.delete(0, 'end')
         # making the matrix
-        matrix1 = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get())],
-                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.L4.get()),float(self.L5.get())],
-                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.T4.get()),float(self.T5.get())]]) 
+        matrix1 = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get()),float(self.M6.get()),float(self.M7.get()),float(self.M8.get()),float(self.M9.get()),float(self.M10.get()),float(self.M11.get())],
+                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.L4.get()),float(self.L5.get()),float(self.L6.get()),float(self.L7.get()),float(self.L8.get()),float(self.L9.get()),float(self.L10.get()),float(self.L11.get())],
+                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.T4.get()),float(self.T5.get()),float(self.T6.get()),float(self.T7.get()),float(self.T8.get()),float(self.T9.get()),float(self.T10.get()),float(self.T11.get())],
+                            [float(self.theta1.get()),float(self.theta2.get()),float(self.theta3.get()),float(self.theta4.get()),float(self.theta5.get()),float(self.theta6.get()),float(self.theta7.get()),float(self.theta8.get()),float(self.theta9.get()),float(self.theta10.get()),float(self.theta11.get())],
+                            [float(self.I1.get()),float(self.I2.get()),float(self.I3.get()),float(self.I4.get()),float(self.I5.get()),float(self.I6.get()),float(self.I7.get()),float(self.I8.get()),float(self.I9.get()),float(self.I10.get()),float(self.I11.get())],
+                            [float(self.C1.get()),float(self.C2.get()),float(self.C3.get()),float(self.C4.get()),float(self.C5.get()),float(self.C6.get()),float(self.C7.get()),float(self.C8.get()),float(self.C9.get()),float(self.C10.get()),float(self.C11.get())],
+                            [float(self.N1.get()),float(self.N2.get()),float(self.N3.get()),float(self.N4.get()),float(self.N5.get()),float(self.N6.get()),float(self.N7.get()),float(self.N8.get()),float(self.N9.get()),float(self.N10.get()),float(self.N11.get())]]) 
 
         rank = np.linalg.matrix_rank(matrix1)
         self.Rank.insert(0,rank)
@@ -420,42 +424,51 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.repvar = []
         self.nondimvar = []
 
-        self.sym     = ([self.Sym1.get(),self.Sym2.get(),self.Sym3.get(),self.Sym4.get(),self.Sym5.get()])
-        self.var     = ([self.Var1.get(),self.Var2.get(),self.Var3.get(),self.Var4.get(),self.Var5.get()])        
+        self.sym     = ([self.Sym1.get(),self.Sym2.get(),self.Sym3.get(),self.Sym4.get(),self.Sym5.get(),self.Sym6.get(),self.Sym7.get(),self.Sym8.get(),self.Sym9.get(),self.Sym10.get(),self.Sym11.get()])
+        self.var     = ([self.Var1.get(),self.Var2.get(),self.Var3.get(),self.Var4.get(),self.Var5.get(),self.Var6.get(),self.Var7.get(),self.Var8.get(),self.Var9.get(),self.Var10.get(),self.Var11.get()])       
         
-        for i in range(0,5):
+        for i in range(0,11):
             if i==0 and int(solve_lin_sys_support.che61.get())==1: self.depvar.append(i)
             elif i==1 and int(solve_lin_sys_support.che63.get())==1: self.depvar.append(i)
             elif i==2 and int(solve_lin_sys_support.che65.get())==1: self.depvar.append(i)
             elif i==3 and int(solve_lin_sys_support.che67.get())==1: self.depvar.append(i)
             elif i==4 and int(solve_lin_sys_support.che69.get())==1: self.depvar.append(i)
+            elif i==5 and int(solve_lin_sys_support.che71.get())==1: self.depvar.append(i)
+            elif i==6 and int(solve_lin_sys_support.che73.get())==1: self.depvar.append(i)
+            elif i==7 and int(solve_lin_sys_support.che75.get())==1: self.depvar.append(i)
+            elif i==8 and int(solve_lin_sys_support.che77.get())==1: self.depvar.append(i)
+            elif i==9 and int(solve_lin_sys_support.che79.get())==1: self.depvar.append(i)
+            elif i==10 and int(solve_lin_sys_support.che81.get())==1: self.depvar.append(i)
         
             if i==0 and int(solve_lin_sys_support.che62.get())==1: self.repvar.append(i)
             elif i==1 and int(solve_lin_sys_support.che64.get())==1: self.repvar.append(i)
             elif i==2 and int(solve_lin_sys_support.che66.get())==1: self.repvar.append(i)
             elif i==3 and int(solve_lin_sys_support.che68.get())==1: self.repvar.append(i)
-            elif i==4 and int(solve_lin_sys_support.che70.get())==1: self.repvar.append(i)        
+            elif i==4 and int(solve_lin_sys_support.che70.get())==1: self.repvar.append(i)    
+            elif i==5 and int(solve_lin_sys_support.che72.get())==1: self.repvar.append(i)
+            elif i==6 and int(solve_lin_sys_support.che74.get())==1: self.repvar.append(i)
+            elif i==7 and int(solve_lin_sys_support.che76.get())==1: self.repvar.append(i)
+            elif i==8 and int(solve_lin_sys_support.che78.get())==1: self.repvar.append(i)
+            elif i==9 and int(solve_lin_sys_support.che80.get())==1: self.repvar.append(i)    
+            elif i==10 and int(solve_lin_sys_support.che82.get())==1: self.repvar.append(i)  
         
-        #if len(k>2): print('There should be only one dependent variable')
-        
-        # check if the basis vectors chosen are independent
-        #for i in 
-        
-        
-        # making the matrix
-        matrix_system = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get())],
-                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.L4.get()),float(self.L5.get())],
-                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.T4.get()),float(self.T5.get())]]) 
+        # making the matrix for processing
+        matrix_system = np.array([[float(self.M1.get()),float(self.M2.get()),float(self.M3.get()),float(self.M4.get()),float(self.M5.get()),float(self.M6.get()),float(self.M7.get()),float(self.M8.get()),float(self.M9.get()),float(self.M10.get()),float(self.M11.get())],
+                            [float(self.L1.get()),float(self.L2.get()),float(self.L3.get()),float(self.L4.get()),float(self.L5.get()),float(self.L6.get()),float(self.L7.get()),float(self.L8.get()),float(self.L9.get()),float(self.L10.get()),float(self.L11.get())],
+                            [float(self.T1.get()),float(self.T2.get()),float(self.T3.get()),float(self.T4.get()),float(self.T5.get()),float(self.T6.get()),float(self.T7.get()),float(self.T8.get()),float(self.T9.get()),float(self.T10.get()),float(self.T11.get())],
+                            [float(self.theta1.get()),float(self.theta2.get()),float(self.theta3.get()),float(self.theta4.get()),float(self.theta5.get()),float(self.theta6.get()),float(self.theta7.get()),float(self.theta8.get()),float(self.theta9.get()),float(self.theta10.get()),float(self.theta11.get())],
+                            [float(self.I1.get()),float(self.I2.get()),float(self.I3.get()),float(self.I4.get()),float(self.I5.get()),float(self.I6.get()),float(self.I7.get()),float(self.I8.get()),float(self.I9.get()),float(self.I10.get()),float(self.I11.get())],
+                            [float(self.C1.get()),float(self.C2.get()),float(self.C3.get()),float(self.C4.get()),float(self.C5.get()),float(self.C6.get()),float(self.C7.get()),float(self.C8.get()),float(self.C9.get()),float(self.C10.get()),float(self.C11.get())],
+                            [float(self.N1.get()),float(self.N2.get()),float(self.N3.get()),float(self.N4.get()),float(self.N5.get()),float(self.N6.get()),float(self.N7.get()),float(self.N8.get()),float(self.N9.get()),float(self.N10.get()),float(self.N11.get())]]) 
 
-        #Check dimensions
+        #Check dimensions and remove the ones with all zeros
         matrix_system = matrix_system[~np.all(matrix_system == 0.0, axis=1)]
         
         print('initial matrix system \n',matrix_system)
-    
         print('Repeated variable',self.repvar)
         print('Dependent variable',self.depvar)
-        print('Dependent variable',solve_lin_sys_support.che61.get(),solve_lin_sys_support.che63.get(),solve_lin_sys_support.che65.get(),solve_lin_sys_support.che67.get(),solve_lin_sys_support.che69.get())
-        print('Repeated variable' ,solve_lin_sys_support.che62.get(),solve_lin_sys_support.che64.get(),solve_lin_sys_support.che66.get(),solve_lin_sys_support.che68.get(),solve_lin_sys_support.che70.get())
+        print('Dependent variable',solve_lin_sys_support.che61.get(),solve_lin_sys_support.che63.get(),solve_lin_sys_support.che65.get(),solve_lin_sys_support.che67.get(),solve_lin_sys_support.che69.get(),solve_lin_sys_support.che71.get(),solve_lin_sys_support.che73.get(),solve_lin_sys_support.che75.get(),solve_lin_sys_support.che77.get(),solve_lin_sys_support.che79.get(),solve_lin_sys_support.che81.get())
+        print('Repeated variable' ,solve_lin_sys_support.che62.get(),solve_lin_sys_support.che64.get(),solve_lin_sys_support.che66.get(),solve_lin_sys_support.che68.get(),solve_lin_sys_support.che70.get(),solve_lin_sys_support.che72.get(),solve_lin_sys_support.che74.get(),solve_lin_sys_support.che76.get(),solve_lin_sys_support.che78.get(),solve_lin_sys_support.che80.get(),solve_lin_sys_support.che82.get())
         print('Shape of matrix system', np.shape(matrix_system)[0],np.shape(matrix_system)[1])
 
         matrix_system_basis = np.empty((np.shape(matrix_system)[0],len(self.repvar)))
@@ -481,7 +494,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         # Using SVD to solve the rank deficient system
         
         ################################Check errors
-        for i in range(0,5):
+        for i in range(0,11):
             if i in self.repvar:
                 pass
             else:
@@ -504,12 +517,16 @@ class Made_by_Mohammad_Afzal_Shadab:
             stringrepvar = f'({stringrepvar})'
             if i in self.depvar:
                 depstring = f"{self.sym[i]}/{stringrepvar}"
-            else:    
+            elif self.sym[i] == 'DV':
+                pass
+            else:
                 string.append(f"{self.sym[i]}/{stringrepvar}")
         info_message = ','.join(string)
         info = []        
         for i in range(0,len(self.sym)):
-            info.append(f'{self.sym[i]} : {self.var[i]}')
+            if self.sym[i] == 'DV':
+                pass
+            else: info.append(f'{self.sym[i]} : {self.var[i]}')
         info = ' \n '.join(info)
         
         if not np.linalg.matrix_rank(matrix_system_basis) < len(self.repvar) and np.linalg.matrix_rank(matrix_system_basis) < np.shape(matrix_system)[1]:
@@ -1042,6 +1059,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.I3.configure(highlightbackground="#d9d9d9")
         self.I3.configure(highlightcolor="black")
         self.I3.configure(insertbackground="black")
+        self.I3.configure(font="-family {Segoe UI}")
+        self.I3.configure(justify='center')
         self.I3.configure(selectbackground="blue")
         self.I3.configure(selectforeground="white")
         
@@ -1162,6 +1181,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.I4.configure(highlightcolor="black")
         self.I4.configure(insertbackground="black")
         self.I4.configure(selectbackground="blue")
+        self.I4.configure(font="-family {Segoe UI}")
+        self.I4.configure(justify='center')
         self.I4.configure(selectforeground="white")
 
         self.C4 = tk.Entry(self.Frame1)
@@ -1173,6 +1194,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.C4.configure(highlightbackground="#d9d9d9")
         self.C4.configure(highlightcolor="black")
         self.C4.configure(insertbackground="black")
+        self.C4.configure(font="-family {Segoe UI}")
+        self.C4.configure(justify='center')
         self.C4.configure(selectbackground="blue")
         self.C4.configure(selectforeground="white")
 
@@ -1318,19 +1341,19 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var6.place(relx=0.05, rely=0.559, height=40, relwidth=0.175)
         self.Var6.configure(background="white")
         self.Var6.configure(disabledforeground="#a3a3a3")
-        self.Var6.configure(font="TkFixedFont")
         self.Var6.configure(foreground="#000000")
         self.Var6.configure(highlightbackground="#d9d9d9")
         self.Var6.configure(highlightcolor="black")
         self.Var6.configure(insertbackground="black")
         self.Var6.configure(selectbackground="blue")
+        self.Var6.configure(font="-family {Segoe UI}")
         self.Var6.configure(selectforeground="white")
 
         self.Sym6 = tk.Entry(self.Frame1)
         self.Sym6.place(relx=0.235, rely=0.559, height=40, relwidth=0.074)
         self.Sym6.configure(background="white")
         self.Sym6.configure(disabledforeground="#a3a3a3")
-        self.Sym6.configure(font="TkFixedFont")
+        self.Sym6.configure(font="-family {Segoe UI}")
         self.Sym6.configure(foreground="#000000")
         self.Sym6.configure(highlightbackground="#d9d9d9")
         self.Sym6.configure(highlightcolor="black")
@@ -1348,8 +1371,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M6.configure(highlightcolor="black")
         self.M6.configure(insertbackground="black")
         self.M6.configure(selectbackground="blue")
-        self.I2.configure(font="-family {Segoe UI}")
-        self.I2.configure(justify='center')
+        self.M6.configure(font="-family {Segoe UI}")
+        self.M6.configure(justify='center')
         self.M6.configure(selectforeground="white")
 
         self.L6 = tk.Entry(self.Frame1)
@@ -1448,6 +1471,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var7.configure(highlightcolor="black")
         self.Var7.configure(insertbackground="black")
         self.Var7.configure(selectbackground="blue")
+        self.Var7.configure(font="-family {Segoe UI}")
         self.Var7.configure(selectforeground="white")
 
         self.Sym7 = tk.Entry(self.Frame1)
@@ -1460,6 +1484,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym7.configure(highlightcolor="black")
         self.Sym7.configure(insertbackground="black")
         self.Sym7.configure(selectbackground="blue")
+        self.Sym7.configure(font="-family {Segoe UI}")
         self.Sym7.configure(selectforeground="white")
 
         self.M7 = tk.Entry(self.Frame1)
@@ -1472,6 +1497,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M7.configure(highlightcolor="black")
         self.M7.configure(insertbackground="black")
         self.M7.configure(selectbackground="blue")
+        self.M7.configure(font="-family {Segoe UI}")
+        self.M7.configure(justify='center')
         self.M7.configure(selectforeground="white")
 
         self.L7 = tk.Entry(self.Frame1)
@@ -1484,6 +1511,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L7.configure(highlightcolor="black")
         self.L7.configure(insertbackground="black")
         self.L7.configure(selectbackground="blue")
+        self.L7.configure(font="-family {Segoe UI}")
+        self.L7.configure(justify='center')
         self.L7.configure(selectforeground="white")
 
         self.T7 = tk.Entry(self.Frame1)
@@ -1496,6 +1525,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T7.configure(highlightcolor="black")
         self.T7.configure(insertbackground="black")
         self.T7.configure(selectbackground="blue")
+        self.T7.configure(font="-family {Segoe UI}")
+        self.T7.configure(justify='center')
         self.T7.configure(selectforeground="white") 
 
         self.theta7 = tk.Entry(self.Frame1)
@@ -1510,6 +1541,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.theta7.configure(selectbackground="blue")
         self.theta7.configure(font="-family {Segoe UI}")
         self.theta7.configure(justify='center')
+        self.theta7.configure(font="-family {Segoe UI}")
+        self.theta7.configure(justify='center')
         self.theta7.configure(selectforeground="white")
 
         self.I7 = tk.Entry(self.Frame1)
@@ -1522,6 +1555,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.I7.configure(highlightcolor="black")
         self.I7.configure(insertbackground="black")
         self.I7.configure(selectbackground="blue")
+        self.I7.configure(font="-family {Segoe UI}")
+        self.I7.configure(justify='center')
         self.I7.configure(selectforeground="white")
 
         self.C7 = tk.Entry(self.Frame1)
@@ -1534,6 +1569,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.C7.configure(highlightcolor="black")
         self.C7.configure(insertbackground="black")
         self.C7.configure(selectbackground="blue")
+        self.C7.configure(font="-family {Segoe UI}")
+        self.C7.configure(justify='center')
         self.C7.configure(selectforeground="white")
         
         self.N7 = tk.Entry(self.Frame1)
@@ -1546,6 +1583,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.N7.configure(highlightcolor="black")
         self.N7.configure(insertbackground="black")
         self.N7.configure(selectbackground="blue")
+        self.N7.configure(font="-family {Segoe UI}")
+        self.N7.configure(justify='center')
         self.N7.configure(selectforeground="white")
         
         # Variable 8 
@@ -1554,19 +1593,19 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var8.place(relx=0.05, rely=0.687, height=40, relwidth=0.175)
         self.Var8.configure(background="white")
         self.Var8.configure(disabledforeground="#a3a3a3")
-        self.Var8.configure(font="TkFixedFont")
         self.Var8.configure(foreground="#000000")
         self.Var8.configure(highlightbackground="#d9d9d9")
         self.Var8.configure(highlightcolor="black")
         self.Var8.configure(insertbackground="black")
         self.Var8.configure(selectbackground="blue")
+        self.Var8.configure(font="-family {Segoe UI}")
         self.Var8.configure(selectforeground="white")
 
         self.Sym8 = tk.Entry(self.Frame1)
         self.Sym8.place(relx=0.235, rely=0.687, height=40, relwidth=0.074)
         self.Sym8.configure(background="white")
         self.Sym8.configure(disabledforeground="#a3a3a3")
-        self.Sym8.configure(font="TkFixedFont")
+        self.Sym8.configure(font="-family {Segoe UI}")
         self.Sym8.configure(foreground="#000000")
         self.Sym8.configure(highlightbackground="#d9d9d9")
         self.Sym8.configure(highlightcolor="black")
@@ -1584,6 +1623,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M8.configure(highlightcolor="black")
         self.M8.configure(insertbackground="black")
         self.M8.configure(selectbackground="blue")
+        self.M8.configure(font="-family {Segoe UI}")
+        self.M8.configure(justify='center')
         self.M8.configure(selectforeground="white")
 
         self.L8 = tk.Entry(self.Frame1)
@@ -1596,6 +1637,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L8.configure(highlightcolor="black")
         self.L8.configure(insertbackground="black")
         self.L8.configure(selectbackground="blue")
+        self.L8.configure(font="-family {Segoe UI}")
+        self.L8.configure(justify='center')
         self.L8.configure(selectforeground="white")
         
         self.T8 = tk.Entry(self.Frame1)
@@ -1608,6 +1651,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T8.configure(highlightcolor="black")
         self.T8.configure(insertbackground="black")
         self.T8.configure(selectbackground="blue")
+        self.T8.configure(font="-family {Segoe UI}")
+        self.T8.configure(justify='center')
         self.T8.configure(selectforeground="white")
 
         self.theta8 = tk.Entry(self.Frame1)
@@ -1634,6 +1679,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.I8.configure(highlightcolor="black")
         self.I8.configure(insertbackground="black")
         self.I8.configure(selectbackground="blue")
+        self.I8.configure(font="-family {Segoe UI}")
+        self.I8.configure(justify='center')
         self.I8.configure(selectforeground="white")
         
         self.C8 = tk.Entry(self.Frame1)
@@ -1646,6 +1693,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.C8.configure(highlightcolor="black")
         self.C8.configure(insertbackground="black")
         self.C8.configure(selectbackground="blue")
+        self.C8.configure(font="-family {Segoe UI}")
+        self.C8.configure(justify='center')
         self.C8.configure(selectforeground="white")
         
         self.N8 = tk.Entry(self.Frame1)
@@ -1659,6 +1708,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.N8.configure(highlightcolor="black")
         self.N8.configure(insertbackground="black")
         self.N8.configure(selectbackground="blue")
+        self.N8.configure(font="-family {Segoe UI}")
+        self.N8.configure(justify='center')
         self.N8.configure(selectforeground="white")
         
         # Variable 9 
@@ -1667,7 +1718,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var9.place(relx=0.05, rely=0.751, height=40, relwidth=0.175)
         self.Var9.configure(background="white")
         self.Var9.configure(disabledforeground="#a3a3a3")
-        self.Var9.configure(font="TkFixedFont")
+        self.Var9.configure(font="-family {Segoe UI}")
         self.Var9.configure(foreground="#000000")
         self.Var9.configure(highlightbackground="#d9d9d9")
         self.Var9.configure(highlightcolor="black")
@@ -1679,7 +1730,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym9.place(relx=0.235, rely=0.751, height=40, relwidth=0.074)
         self.Sym9.configure(background="white")
         self.Sym9.configure(disabledforeground="#a3a3a3")
-        self.Sym9.configure(font="TkFixedFont")
+        self.Sym9.configure(font="-family {Segoe UI}")
         self.Sym9.configure(foreground="#000000")
         self.Sym9.configure(highlightbackground="#d9d9d9")
         self.Sym9.configure(highlightcolor="black")
@@ -1697,6 +1748,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M9.configure(highlightcolor="black")
         self.M9.configure(insertbackground="black")
         self.M9.configure(selectbackground="blue")
+        self.M9.configure(font="-family {Segoe UI}")
+        self.M9.configure(justify='center')
         self.M9.configure(selectforeground="white")
 
         self.L9 = tk.Entry(self.Frame1)
@@ -1709,6 +1762,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L9.configure(highlightcolor="black")
         self.L9.configure(insertbackground="black")
         self.L9.configure(selectbackground="blue")
+        self.L9.configure(font="-family {Segoe UI}")
+        self.L9.configure(justify='center')
         self.L9.configure(selectforeground="white")
 
         self.T9 = tk.Entry(self.Frame1)
@@ -1721,6 +1776,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T9.configure(highlightcolor="black")
         self.T9.configure(insertbackground="black")
         self.T9.configure(selectbackground="blue")
+        self.T9.configure(font="-family {Segoe UI}")
+        self.T9.configure(justify='center')
         self.T9.configure(selectforeground="white")
 
         self.theta9 = tk.Entry(self.Frame1)
@@ -1747,6 +1804,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.I9.configure(highlightcolor="black")
         self.I9.configure(insertbackground="black")
         self.I9.configure(selectbackground="blue")
+        self.I9.configure(font="-family {Segoe UI}")
+        self.I9.configure(justify='center')
         self.I9.configure(selectforeground="white")
 
         self.C9 = tk.Entry(self.Frame1)
@@ -1759,6 +1818,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.C9.configure(highlightcolor="black")
         self.C9.configure(insertbackground="black")
         self.C9.configure(selectbackground="blue")
+        self.C9.configure(font="-family {Segoe UI}")
+        self.C9.configure(justify='center')
         self.C9.configure(selectforeground="white")
 
         self.N9 = tk.Entry(self.Frame1)
@@ -1771,6 +1832,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.N9.configure(highlightcolor="black")
         self.N9.configure(insertbackground="black")
         self.N9.configure(selectbackground="blue")
+        self.N9.configure(font="-family {Segoe UI}")
+        self.N9.configure(justify='center')
         self.N9.configure(selectforeground="white")
 
         # Variable 10
@@ -1779,7 +1842,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var10.place(relx=0.05, rely=0.815, height=40, relwidth=0.175)
         self.Var10.configure(background="white")
         self.Var10.configure(disabledforeground="#a3a3a3")
-        self.Var10.configure(font="TkFixedFont")
+        self.Var10.configure(font="-family {Segoe UI}")
         self.Var10.configure(foreground="#000000")
         self.Var10.configure(highlightbackground="#d9d9d9")
         self.Var10.configure(highlightcolor="black")
@@ -1791,7 +1854,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym10.place(relx=0.235, rely=0.815, height=40, relwidth=0.074)
         self.Sym10.configure(background="white")
         self.Sym10.configure(disabledforeground="#a3a3a3")
-        self.Sym10.configure(font="TkFixedFont")
+        self.Sym10.configure(font="-family {Segoe UI}")
         self.Sym10.configure(foreground="#000000")
         self.Sym10.configure(highlightbackground="#d9d9d9")
         self.Sym10.configure(highlightcolor="black")
@@ -1809,6 +1872,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M10.configure(highlightcolor="black")
         self.M10.configure(insertbackground="black")
         self.M10.configure(selectbackground="blue")
+        self.M10.configure(font="-family {Segoe UI}")
+        self.M10.configure(justify='center')
         self.M10.configure(selectforeground="white")
 
         self.L10 = tk.Entry(self.Frame1)
@@ -1821,6 +1886,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L10.configure(highlightcolor="black")
         self.L10.configure(insertbackground="black")
         self.L10.configure(selectbackground="blue")
+        self.L10.configure(font="-family {Segoe UI}")
+        self.L10.configure(justify='center')
         self.L10.configure(selectforeground="white")
  
         self.T10 = tk.Entry(self.Frame1)
@@ -1833,6 +1900,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T10.configure(highlightcolor="black")
         self.T10.configure(insertbackground="black")
         self.T10.configure(selectbackground="blue")
+        self.T10.configure(font="-family {Segoe UI}")
+        self.T10.configure(justify='center')
         self.T10.configure(selectforeground="white")
 
         self.theta10 = tk.Entry(self.Frame1)
@@ -1859,6 +1928,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.I10.configure(highlightcolor="black")
         self.I10.configure(insertbackground="black")
         self.I10.configure(selectbackground="blue")
+        self.I10.configure(font="-family {Segoe UI}")
+        self.I10.configure(justify='center')
         self.I10.configure(selectforeground="white")
 
         self.C10 = tk.Entry(self.Frame1)
@@ -1871,6 +1942,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.C10.configure(highlightcolor="black")
         self.C10.configure(insertbackground="black")
         self.C10.configure(selectbackground="blue")
+        self.C10.configure(font="-family {Segoe UI}")
+        self.C10.configure(justify='center')
         self.C10.configure(selectforeground="white")
 
         self.N10 = tk.Entry(self.Frame1)
@@ -1883,6 +1956,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.N10.configure(highlightcolor="black")
         self.N10.configure(insertbackground="black")
         self.N10.configure(selectbackground="blue")
+        self.N10.configure(font="-family {Segoe UI}")
+        self.N10.configure(justify='center')
         self.N10.configure(selectforeground="white")
        
         # Variable 11
@@ -1891,7 +1966,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Var11.place(relx=0.05, rely=0.88, height=40, relwidth=0.175)
         self.Var11.configure(background="white")
         self.Var11.configure(disabledforeground="#a3a3a3")
-        self.Var11.configure(font="TkFixedFont")
+        self.Var11.configure(font="-family {Segoe UI}")
         self.Var11.configure(foreground="#000000")
         self.Var11.configure(highlightbackground="#d9d9d9")
         self.Var11.configure(highlightcolor="black")
@@ -1903,7 +1978,7 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.Sym11.place(relx=0.235, rely=0.88, height=40, relwidth=0.074)
         self.Sym11.configure(background="white")
         self.Sym11.configure(disabledforeground="#a3a3a3")
-        self.Sym11.configure(font="TkFixedFont")
+        self.Sym11.configure(font="-family {Segoe UI}")
         self.Sym11.configure(foreground="#000000")
         self.Sym11.configure(highlightbackground="#d9d9d9")
         self.Sym11.configure(highlightcolor="black")
@@ -1921,6 +1996,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.M11.configure(highlightcolor="black")
         self.M11.configure(insertbackground="black")
         self.M11.configure(selectbackground="blue")
+        self.M11.configure(font="-family {Segoe UI}")
+        self.M11.configure(justify='center')
         self.M11.configure(selectforeground="white")
         
         self.L11 = tk.Entry(self.Frame1)
@@ -1933,6 +2010,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.L11.configure(highlightcolor="black")
         self.L11.configure(insertbackground="black")
         self.L11.configure(selectbackground="blue")
+        self.L11.configure(font="-family {Segoe UI}")
+        self.L11.configure(justify='center')
         self.L11.configure(selectforeground="white")
 
         self.T11 = tk.Entry(self.Frame1)
@@ -1945,6 +2024,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.T11.configure(highlightcolor="black")
         self.T11.configure(insertbackground="black")
         self.T11.configure(selectbackground="blue")
+        self.T11.configure(font="-family {Segoe UI}")
+        self.T11.configure(justify='center')
         self.T11.configure(selectforeground="white")        
         
         self.theta11 = tk.Entry(self.Frame1)
@@ -1971,6 +2052,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.I11.configure(highlightcolor="black")
         self.I11.configure(insertbackground="black")
         self.I11.configure(selectbackground="blue")
+        self.I11.configure(font="-family {Segoe UI}")
+        self.I11.configure(justify='center')
         self.I11.configure(selectforeground="white")
 
         self.C11 = tk.Entry(self.Frame1)
@@ -1983,6 +2066,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.C11.configure(highlightcolor="black")
         self.C11.configure(insertbackground="black")
         self.C11.configure(selectbackground="blue")
+        self.C11.configure(font="-family {Segoe UI}")
+        self.C11.configure(justify='center')
         self.C11.configure(selectforeground="white")
 
         self.N11 = tk.Entry(self.Frame1)
@@ -1995,6 +2080,8 @@ class Made_by_Mohammad_Afzal_Shadab:
         self.N11.configure(highlightcolor="black")
         self.N11.configure(insertbackground="black")
         self.N11.configure(selectbackground="blue")
+        self.N11.configure(font="-family {Segoe UI}")
+        self.N11.configure(justify='center')
         self.N11.configure(selectforeground="white")
 
         # Calculating the rank to find the basis functions
