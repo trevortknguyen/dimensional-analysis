@@ -1,3 +1,8 @@
+# Dimensional Analysis code support file
+# author: Mohammad Afzal Shadab
+# date: 02/18/2021
+# email: mashadab@utexas.edu
+
 import sys
 
 try:
