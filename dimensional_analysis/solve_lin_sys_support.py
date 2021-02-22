@@ -76,7 +76,7 @@ def destroy_window():
     top_level = None
 
 if __name__ == '__main__':
-    import solve_lin_sys
+    from dimensional_analysis import solve_lin_sys
     solve_lin_sys.vp_start_gui()
 
 

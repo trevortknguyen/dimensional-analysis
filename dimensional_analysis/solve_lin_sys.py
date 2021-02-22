@@ -18,7 +18,7 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
-import solve_lin_sys_support
+from dimensional_analysis import solve_lin_sys_support
 from tkinter import messagebox as fmsgbox
 
 def vp_start_gui():
